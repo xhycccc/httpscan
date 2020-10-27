@@ -1,5 +1,7 @@
 # httpscan V1.1
 
+增加支持指定端口范围扫描。
+
 **Usage**：`python httpscan.py IP/CIDR –t threads -p portrange`
 
 Example:`python httpscan.py 10.20.30.0/24 –t 10 -p 80,443`
