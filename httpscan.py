@@ -45,7 +45,10 @@ class scan():
       with open(self.ipfile) as f:
         contents = f.read().split('\n')
       for line in contents:
-        jsline = json.loads(line)
+        try:
+          jsline = json.loads(line)
+        except:
+          continue
         assets.append((jsline['ipaddr'], jsline['ports']))
       
     else:
