@@ -48,8 +48,8 @@ class scan():
             banner += r.headers['Server'][:20] #get the server banner
           except:pass
           printLock.acquire()
-          print "|%-16s|%-6s|%-20s|%-30s|" % (ip,status,banner,title)
-          print "+----------------+------+--------------------+------------------------------+"
+          print "|%-21s|%-6s|%-20s|%-30s|" % (ip,status,banner,title)
+          print "+---------------------+------+--------------------+------------------------------+"
 
           #Save log
           with open("./log/"+self.cidr.strNormal(3)+".log",'a') as f:
@@ -79,14 +79,14 @@ if __name__ == "__main__":
     parser.print_help()
     sys.exit(0)
 
-  print "+----------------+------+--------------------+------------------------------+"
-  print "|     IP         |Status|       Server       |            Title             |"
-  print "+----------------+------+--------------------+------------------------------+"
+  print "+---------------------+------+--------------------+------------------------------+"
+  print "|          IP         |Status|       Server       |            Title             |"
+  print "+---------------------+------+--------------------+------------------------------+"
 
 
   ports = []
   if ',' in options.ports:
-    ports = options.ports.split(',')
+    ports = [int(port) for port in options.ports.split(',')]
   elif '-' in options.ports:
     start, end = options.ports.split('-')
     ports = [port for port in range(int(start), int(end)+1)]
