@@ -18,19 +18,23 @@ header = {'User-Agent' : 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36
 
 class scan():
 
-  def __init__(self,cidr,threads_num):
+  def __init__(self,cidr,threads_num, ports):
     self.threads_num = threads_num
     self.cidr = IP(cidr)
-	#build ip queue
+    self.ports = ports
+    #build ip queue
     self.IPs = Queue.Queue()
     for ip in self.cidr:
       ip = str(ip)
-      self.IPs.put(ip)
+      for port in self.ports:
+        self.IPs.put('%s:%d' % (ip, port))
+
 
   def request(self):
     with threading.Lock():
       while self.IPs.qsize() > 0:
         ip = self.IPs.get()
+
         try:
           r = requests.Session().get('http://'+str(ip),headers=header,timeout=TimeOut)
           status = r.status_code
@@ -67,6 +71,9 @@ if __name__ == "__main__":
   parser.add_option("-t", "--thread", dest = "threads_num",
     default = 10, type = "int",
     help = "[optional]number of  theads,default=10")
+  parser.add_option("-p", "--port", dest = "ports",
+    default = "80", type = "str",
+    help = "[optional]80,443 or 80-443, default 80")
   (options, args) = parser.parse_args()
   if len(args) < 1:
     parser.print_help()
@@ -76,5 +83,16 @@ if __name__ == "__main__":
   print "|     IP         |Status|       Server       |            Title             |"
   print "+----------------+------+--------------------+------------------------------+"
 
-  s = scan(cidr=args[0],threads_num=options.threads_num)
+
+  ports = []
+  if ',' in options.ports:
+    ports = options.ports.split(',')
+  elif '-' in options.ports:
+    start, end = options.ports.split('-')
+    ports = [port for port in range(int(start), int(end)+1)]
+  else:
+    ports.append(int(options.ports))
+
+  print ports
+  s = scan(cidr=args[0],threads_num=options.threads_num, ports=ports)
   s.run()
