@@ -1,12 +1,19 @@
-# httpscan
-httpscan是一个扫描指定CIDR网段的Web主机的小工具。和端口扫描器不一样，httpscan是以爬虫的方式进行Web主机发现，因此相对来说不容易被防火墙拦截。
+# httpscan V1.1
 
-httpscan会返回IP http状态码 Web容器版本 以及网站标题。
-![demo][1]
+**Usage**：`python httpscan.py IP/CIDR –t threads -p portrange`
 
-**Usage**：`./httpscan IP/CIDR –t threads`
+Example:`python httpscan.py 10.20.30.0/24 –t 10 -p 80,443`
 
-Example:`./httpscan.py 10.20.30.0/24 –t 10`
+`python httpscan.py 10.20.30.0/24 –t 10 -p 8000-8080`
 
+```
+httpscan> python .\httpscan.py 192.168.62.201 -p 80,8080
++---------------------+------+--------------------+------------------------------+
+|          IP         |Status|       Server       |            Title             |
++---------------------+------+--------------------+------------------------------+
+|192.168.62.201:8080  |401   |Oracle XML DB/Oracle|None                          |
++---------------------+------+--------------------+------------------------------+
+|192.168.62.201:80    |200   |Apache/2.4.39 (Win64|None                          |
++---------------------+------+--------------------+------------------------------+
+```
 
-  [1]: https://raw.githubusercontent.com/zer0h/httpscan/master/log/demo.png
