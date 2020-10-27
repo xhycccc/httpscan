@@ -93,6 +93,5 @@ if __name__ == "__main__":
   else:
     ports.append(int(options.ports))
 
-  print ports
   s = scan(cidr=args[0],threads_num=options.threads_num, ports=ports)
   s.run()
