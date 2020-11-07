@@ -43,13 +43,18 @@ class scan():
     assets = []
     if os.path.exists(self.ipfile):
       with open(self.ipfile) as f:
-        contents = f.read().split('\n')
-      for line in contents:
-        try:
-          jsline = json.loads(line)
-        except:
-          continue
-        assets.append((jsline['ipaddr'], jsline['ports']))
+        contents = f.read()
+      if ':' in contents: # ip:port格式
+        for line in contents.split('\n'):
+          ip,port = line.split(':')
+          assets.append((ip, port))
+      else: # json格式
+        for line in contents.split('\n'):
+          try:
+            jsline = json.loads(line)
+          except:
+            continue
+          assets.append((jsline['ipaddr'], jsline['ports']))
       
     else:
       print 'file not exists'
