@@ -46,8 +46,11 @@ class scan():
         contents = f.read()
       if ':' in contents: # ip:port格式
         for line in contents.split('\n'):
-          ip,port = line.split(':')
-          assets.append((ip, port))
+          if line :
+            ip_port = line.split(':')
+            ip = ip_port[0]
+            port = [int(ip_port[1])]
+            assets.append((ip, port))
       else: # json格式
         for line in contents.split('\n'):
           try:
