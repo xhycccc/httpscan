@@ -1,19 +1,17 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #coding:utf-8
-# Author: Zeroh
+# Author: xhycccc
 import os
 import re
 import sys
 import json
-import Queue
+import queue
 import traceback
 import threading
 import optparse
 import requests
 from IPy import IP
 
-reload(sys)
-sys.setdefaultencoding('utf-8')
 printLock = threading.Semaphore(1)  #lock Screen print
 TimeOut = 3  #request timeout
 
@@ -26,7 +24,7 @@ class scan():
     self.threads_num = threads_num
     self.ipfile = ipfile
     #build ip queue
-    self.IPs = Queue.Queue()
+    self.IPs = queue.Queue()
 
     if self.ipfile != "":
       assets = self.readFile()
@@ -60,7 +58,7 @@ class scan():
           assets.append((jsline['ipaddr'], jsline['ports']))
       
     else:
-      print 'file not exists'
+      print('file not exists')
     return assets
 
 
@@ -82,8 +80,8 @@ class scan():
           except:pass
           printLock.acquire()
           try:
-            print "|%-21s|%-6s|%-20s|%-30s|" % (ip,status,banner,title.decode('utf-8'))
-            print "+---------------------+------+--------------------+------------------------------+"
+            print("|%-21s|%-6s|%-20s|%-30s|" % (ip,status,banner,title.decode('utf-8')))
+            print("+---------------------+------+--------------------+------------------------------+")
             #Save log
             with open("./log/result.log",'a') as f:
               f.write("%s %s  %s  %s\n" % (ip,status,banner,title))
@@ -103,7 +101,7 @@ class scan():
 
 
 if __name__ == "__main__":
-  parser = optparse.OptionParser("Usage: %prog [options] target")
+  parser = optparse.OptionParser("Usage: python3 %prog [options] target_ip\ne.g. python3 httpscan.py 192.168.0.1/24 -p 80,443,8000,8080 -t 50\npython3 httpscan.py -f conf/ip.txt")
   parser.add_option("-t", "--thread", dest = "threads_num",
     default = 10, type = "int",
     help = "[optional]number of  theads,default=10")
@@ -128,9 +126,9 @@ if __name__ == "__main__":
 
   cidr = '' if options.file != "" else args[0]
 
-  print "+---------------------+------+--------------------+------------------------------+"
-  print "|          IP         |Status|       Server       |            Title             |"
-  print "+---------------------+------+--------------------+------------------------------+"
+  print ("+---------------------+------+--------------------+------------------------------+")
+  print ("|          IP         |Status|       Server       |            Title             |")
+  print ("+---------------------+------+--------------------+------------------------------+")
 
   ports = []
   if ',' in options.ports:

@@ -1,10 +1,10 @@
-# httpscan V1.1
+# httpscan V1.2
 
 ### Update log
 
-1. 增加支持指定端口范围扫描。
-
-2. 增加指定文件扫描。文件格式为：
+1. 改为python3
+2. 增加支持指定端口范围扫描。
+3. 增加指定文件扫描。文件格式为：
 
    ```
    {"ipaddr":"192.168.62.201","ports":[80,8080]}
@@ -16,22 +16,22 @@
 
 ## Usage
 
-`python httpscan.py IP/CIDR –t threads -p portrange`
+`python3 httpscan.py IP/CIDR –t threads -p portrange`
 
 或
 
- `python httpscan.py -f xxx.txt`
+ `python3 httpscan.py -f xxx.txt`
 
 Example:
 
-`python httpscan.py 10.20.30.0/24 –t 10 -p 80,443`
+`python3 httpscan.py 10.20.30.0/24 –t 10 -p 80,443`
 
-`python httpscan.py 10.20.30.0/24 –t 10 -p 8000-8080`
+`python3 httpscan.py 10.20.30.0/24 –t 10 -p 8000-8080`
 
-`python .\httpscan.py -f .\conf\ip.txt`
+`python3 .\httpscan.py -f .\conf\ip.txt`
 
 ```
-httpscan> python .\httpscan.py 192.168.62.201 -p 80,8080
+httpscan> python3 .\httpscan.py 192.168.62.201 -p 80,8080
 +---------------------+------+--------------------+------------------------------+
 |          IP         |Status|       Server       |            Title             |
 +---------------------+------+--------------------+------------------------------+
